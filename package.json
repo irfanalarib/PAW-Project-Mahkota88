@@ -1,0 +1,19 @@
+{
+  "name": "paw-project-kopimahkota88",
+  "version": "1.0.0",
+  "description": "Kopi Mahkota 88 - katalog kopi UMKM (Express.js + EJS + MVC). Project bertahap PAW TI-501.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": ["express", "ejs", "mvc", "umkm", "kopi"],
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
