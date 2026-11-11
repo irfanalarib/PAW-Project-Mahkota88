@@ -1,6 +1,39 @@
-  <footer class="mt-16 bg-stone-900 py-8 text-center text-sm text-stone-400">
-    <p>&copy; <%= new Date().getFullYear() %> <%= config.appName %> &middot; v<%= config.version %></p>
-    <p class="mt-1">Project PAW TI-501 &middot; Express.js + EJS + MVC</p>
+  </div><%# penutup #konten %>
+
+  <footer class="bg-brown text-cream/80">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-4 py-10">
+      <a href="/" class="flex items-center gap-2" aria-label="<%= config.appName %> - beranda">
+        <svg class="h-9 w-9" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M6 26 L10 10 L19 19 L24 7 L29 19 L38 10 L42 26 Z" fill="#C69A55"/>
+          <path d="M24 44 C14 44 8 37 8 30 C16 30 24 33 24 44 Z" fill="#F3EBD7"/>
+          <path d="M24 44 C34 44 40 37 40 30 C32 30 24 33 24 44 Z" fill="#C69A55"/>
+        </svg>
+        <span class="font-serif text-lg font-bold text-cream"><%= config.appName %></span>
+      </a>
+
+      <ul class="flex flex-wrap gap-6 text-xs uppercase tracking-widest">
+        <li><a href="/#katalog" class="hover:text-gold">Katalog</a></li>
+        <li><a href="/#cerita" class="hover:text-gold">Cerita</a></li>
+        <li><a href="/admin/produk" class="hover:text-gold">Kelola</a></li>
+        <li><a href="/api/produk" class="hover:text-gold">API</a></li>
+      </ul>
+    </div>
+    <div class="border-t border-white/10 py-4 text-center text-xs">
+      &copy; <%= new Date().getFullYear() %> <%= config.appName %>. Semua hak dilindungi. &middot; v<%= config.version %> &middot; Project PAW TI-501
+    </div>
   </footer>
+
+  <script>
+    // Menu mobile
+    (function () {
+      var btn = document.getElementById('menu-btn');
+      var menu = document.getElementById('menu-mobile');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function () {
+        var terbuka = menu.classList.toggle('hidden') === false;
+        btn.setAttribute('aria-expanded', String(terbuka));
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+<%# Ilustrasi tumpukan biji kopi (SVG) untuk hero. %>
+<svg viewBox="0 0 400 300" class="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tumpukan biji kopi">
+  <defs>
+    <g id="biji">
+      <ellipse rx="19" ry="12" fill="currentColor"/>
+      <path d="M-16 -2 Q-6 -9 0 0 Q6 9 16 2" stroke="#1D110B" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <% var warna = ['#8A5A38', '#70452C', '#5B3623', '#A4693F']; %>
+  <% for (var i = 89; i >= 0; i--) {
+       var sudut = i * 2.399963;
+       var r = 13 * Math.sqrt(i);
+       var x = 200 + r * Math.cos(sudut) * 1.25;
+       var y = 160 + r * Math.sin(sudut) * 0.8;
+       var rot = (i * 47) % 180;
+       var skala = 0.85 + (i % 4) * 0.08; %>
+    <use href="#biji" transform="translate(<%= x.toFixed(1) %> <%= y.toFixed(1) %>) rotate(<%= rot %>) scale(<%= skala.toFixed(2) %>)" color="<%= warna[i % 4] %>"/>
+  <% } %>
+</svg>

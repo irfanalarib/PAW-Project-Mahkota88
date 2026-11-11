@@ -1,19 +1,69 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %> | <%= config.appName %></title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: '#3B2116',
+            coffee: '#70452C',
+            gold: '#C69A55',
+            cream: '#F3EBD7',
+            ivory: '#FFFCF7',
+          },
+          fontFamily: {
+            sans: ['Poppins', 'system-ui', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+          },
+        },
+      },
+    };
+  </script>
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased">
-  <header class="bg-stone-900 text-stone-50">
-    <nav class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4" aria-label="Navigasi utama">
-      <a href="/" class="text-lg font-bold tracking-tight text-amber-400"><%= config.appName %></a>
-      <ul class="flex items-center gap-5 text-sm">
-        <li><a href="/#katalog" class="hover:text-amber-400">Katalog</a></li>
-        <li><a href="/api/produk" class="hover:text-amber-400">API Produk</a></li>
-        <li><a href="/api/status" class="hover:text-amber-400">Status</a></li>
+<body class="bg-ivory font-sans text-brown antialiased">
+  <a href="#konten" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2">Lewati ke konten</a>
+
+  <header class="sticky top-0 z-40 border-b border-brown/10 bg-ivory/95 backdrop-blur">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3" aria-label="Navigasi utama">
+      <a href="/" class="flex items-center gap-2" aria-label="<%= config.appName %> - beranda">
+        <svg class="h-9 w-9" viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M6 26 L10 10 L19 19 L24 7 L29 19 L38 10 L42 26 Z" fill="#C69A55"/>
+          <path d="M24 44 C14 44 8 37 8 30 C16 30 24 33 24 44 Z" fill="#3B2116"/>
+          <path d="M24 44 C34 44 40 37 40 30 C32 30 24 33 24 44 Z" fill="#70452C"/>
+        </svg>
+        <span class="font-serif text-lg font-bold"><%= config.appName %></span>
+      </a>
+
+      <ul class="hidden items-center gap-8 text-xs font-medium uppercase tracking-widest md:flex">
+        <li><a href="/" class="hover:text-gold">Beranda</a></li>
+        <li><a href="/#katalog" class="hover:text-gold">Katalog</a></li>
+        <li><a href="/#cerita" class="hover:text-gold">Cerita</a></li>
+        <li><a href="/#kualitas" class="hover:text-gold">Kualitas</a></li>
+        <li><a href="/admin/produk" class="hover:text-gold">Kelola</a></li>
       </ul>
+
+      <button id="menu-btn" type="button" class="md:hidden" aria-label="Buka menu" aria-expanded="false" aria-controls="menu-mobile">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
     </nav>
+
+    <ul id="menu-mobile" class="hidden border-t border-brown/10 px-4 pb-3 text-sm font-medium uppercase tracking-widest md:hidden">
+      <li><a href="/" class="block py-3">Beranda</a></li>
+      <li><a href="/#katalog" class="block py-3">Katalog</a></li>
+      <li><a href="/#cerita" class="block py-3">Cerita</a></li>
+      <li><a href="/#kualitas" class="block py-3">Kualitas</a></li>
+      <li><a href="/admin/produk" class="block py-3">Kelola</a></li>
+    </ul>
   </header>
+
+  <div id="konten">

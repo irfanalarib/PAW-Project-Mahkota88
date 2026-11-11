@@ -1,0 +1,12 @@
+<%# Ilustrasi kemasan kopi (SVG). Pemakaian: include('partials/kemasan', { nama: 'Gayo Aceh', kelas: 'h-44 w-auto' }) %>
+<svg viewBox="0 0 120 160" class="<%= kelas %>" role="img" aria-label="Kemasan kopi <%= nama %>">
+  <rect x="20" y="8" width="80" height="12" rx="2" fill="#8A5222"/>
+  <path d="M16 20 H104 L110 148 Q110 156 102 156 H18 Q10 156 10 148 Z" fill="#B87333"/>
+  <path d="M16 20 H104 L105 34 H15 Z" fill="#9C5E28"/>
+  <path d="M10 148 Q10 156 18 156 H30 L24 20 H16 Z" fill="#000" opacity=".08"/>
+  <rect x="32" y="52" width="56" height="70" rx="3" fill="#FFFCF7" stroke="#C69A55" stroke-width="1"/>
+  <text x="60" y="67" text-anchor="middle" font-size="6" letter-spacing="1" fill="#70452C" font-family="Poppins, sans-serif">KOPI MAHKOTA 88</text>
+  <ellipse cx="60" cy="87" rx="9" ry="6" fill="#70452C"/>
+  <path d="M52 86 Q56 82 60 87 Q64 92 68 88" stroke="#FFFCF7" stroke-width="1.2" fill="none"/>
+  <text x="60" y="110" text-anchor="middle" font-size="9" font-weight="700" fill="#3B2116" font-family="'Playfair Display', serif"><%= nama.split(' ')[0] %></text>
+</svg>
