@@ -1,8 +1,12 @@
-// Entry point aplikasi: menyiapkan Express, view engine, middleware, dan routes.
+// Entry point aplikasi: menyiapkan Express, view engine, middleware, routes, dan database.
+require('dotenv').config(); // harus paling atas agar .env terbaca oleh config
+
 const path = require('path');
 const express = require('express');
 
 const config = require('./config');
+const sequelize = require('./config/database');
+require('./models/produkModel'); // mendaftarkan model sebelum sync
 const requestLogger = require('./middlewares/logger');
 const pageRoutes = require('./routes/pageRoutes');
 const apiRoutes = require('./routes/apiRoutes');
@@ -35,21 +39,40 @@ app.use((req, res) => {
   res.status(404).render('404', { title: 'Halaman tidak ditemukan' });
 });
 
-// Penanganan error umum
+// Penanganan error umum (termasuk JSON body yang rusak -> 400)
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error(err);
+  const status = err.status || err.statusCode || 500;
+  if (status >= 500) console.error(err);
+
   if (req.path.startsWith('/api')) {
-    return res.status(500).json({ status: 'error', pesan: 'Terjadi kesalahan pada server' });
+    const pesan = status === 400 ? 'Format request tidak valid' : 'Terjadi kesalahan pada server';
+    return res.status(status).json({ status: 'error', pesan });
   }
-  res.status(500).render('404', { title: 'Terjadi kesalahan' });
+  res.status(status).render('404', { title: 'Terjadi kesalahan' });
 });
 
-// Jalankan server hanya jika file ini dieksekusi langsung
+// Hubungkan database, sinkronkan tabel, lalu jalankan server
+async function start() {
+  try {
+    await sequelize.authenticate();
+    console.log('Koneksi database PostgreSQL berhasil');
+
+    await sequelize.sync(); // membuat tabel jika belum ada
+    console.log('Sinkronisasi tabel selesai');
+
+    app.listen(config.port, () => {
+      console.log(`${config.appName} berjalan di http://localhost:${config.port}`);
+    });
+  } catch (err) {
+    console.error('Gagal menyalakan server:', err.message);
+    process.exit(1);
+  }
+}
+
+// Jalankan hanya jika file ini dieksekusi langsung
 if (require.main === module) {
-  app.listen(config.port, () => {
-    console.log(`${config.appName} berjalan di http://localhost:${config.port}`);
-  });
+  start();
 }
 
 module.exports = app;
