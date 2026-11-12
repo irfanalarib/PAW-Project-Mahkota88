@@ -10,11 +10,20 @@ const PageController = {
         ProdukModel.countTersedia(),
       ]);
 
+      // Daerah asal kopi (maksimal 3 daerah berbeda) untuk bagian "Discover Our Origin".
+      const asalKopi = [];
+      produk.forEach((p) => {
+        if (p.asal && asalKopi.length < 3 && !asalKopi.some((a) => a.daerah === p.asal)) {
+          asalKopi.push({ daerah: p.asal, nama: p.nama });
+        }
+      });
+
       res.render('index', {
-        title: 'Beranda',
+        title: 'Home',
         produk,
         totalTersedia,
         totalProduk: produk.length,
+        asalKopi,
       });
     } catch (err) {
       next(err);

@@ -1,12 +1,22 @@
-<%# Ilustrasi kemasan kopi (SVG). Pemakaian: include('partials/kemasan', { nama: 'Gayo Aceh', kelas: 'h-44 w-auto' }) %>
-<svg viewBox="0 0 120 160" class="<%= kelas %>" role="img" aria-label="Kemasan kopi <%= nama %>">
-  <rect x="20" y="8" width="80" height="12" rx="2" fill="#8A5222"/>
-  <path d="M16 20 H104 L110 148 Q110 156 102 156 H18 Q10 156 10 148 Z" fill="#B87333"/>
-  <path d="M16 20 H104 L105 34 H15 Z" fill="#9C5E28"/>
-  <path d="M10 148 Q10 156 18 156 H30 L24 20 H16 Z" fill="#000" opacity=".08"/>
-  <rect x="32" y="52" width="56" height="70" rx="3" fill="#FFFCF7" stroke="#C69A55" stroke-width="1"/>
-  <text x="60" y="67" text-anchor="middle" font-size="6" letter-spacing="1" fill="#70452C" font-family="Poppins, sans-serif">KOPI MAHKOTA 88</text>
-  <ellipse cx="60" cy="87" rx="9" ry="6" fill="#70452C"/>
-  <path d="M52 86 Q56 82 60 87 Q64 92 68 88" stroke="#FFFCF7" stroke-width="1.2" fill="none"/>
-  <text x="60" y="110" text-anchor="middle" font-size="9" font-weight="700" fill="#3B2116" font-family="'Playfair Display', serif"><%= nama.split(' ')[0] %></text>
+<%# Ilustrasi kemasan stand-up pouch hijau tua, finishing matte, label ivory (SVG).
+    Pemakaian: include('partials/kemasan', { nama: 'Gayo Aceh', asal: 'Aceh Tengah', berat: '200 gr', kelas: 'h-44 w-auto' }) %>
+<% var daerah = (asal || '').split(',')[0].trim(); %>
+<svg viewBox="0 0 120 170" class="<%= kelas %>" role="img" aria-label="Kemasan kopi <%= nama %>">
+  <ellipse cx="60" cy="165" rx="40" ry="3.5" fill="#000" opacity=".14"/>
+  <path d="M20 12 H100 L107 152 Q107 160 99 160 H21 Q13 160 13 152 Z" fill="#2F4A36"/>
+  <path d="M20 12 H100 L101 30 H19 Z" fill="#26402E"/>
+  <rect x="25" y="19" width="70" height="2" rx="1" fill="#16271C" opacity=".55"/>
+  <path d="M13 152 Q13 160 21 160 H36 L28 30 H19 Z" fill="#fff" opacity=".05"/>
+  <path d="M48 30 L72 160 H84 L60 30 Z" fill="#fff" opacity=".03"/>
+  <rect x="29" y="60" width="62" height="84" rx="7" fill="#FFFFFF"/>
+  <path d="M51 80 L53 71 L57 75 L60 68 L63 75 L67 71 L69 80 Z" fill="#4F6F52"/>
+  <path d="M60 90 C54 90 51 85 51 82 C55 82 60 84 60 90 Z M60 90 C66 90 69 85 69 82 C65 82 60 84 60 90 Z" fill="#493020"/>
+  <text x="60" y="101" text-anchor="middle" font-size="4.6" letter-spacing="1" fill="#4F6F52" font-family="Poppins, sans-serif">KOPI MAHKOTA 88</text>
+  <text x="60" y="116" text-anchor="middle" font-size="10" font-weight="700" fill="#493020" font-family="'Playfair Display', serif"><%= nama.split(' ')[0] %></text>
+  <% if (daerah) { %>
+    <text x="60" y="126" text-anchor="middle" font-size="5.2" fill="#4F6F52" font-family="Poppins, sans-serif"><%= daerah %></text>
+  <% } %>
+  <% if (berat) { %>
+    <text x="60" y="136" text-anchor="middle" font-size="4.6" fill="#493020" opacity=".7" font-family="Poppins, sans-serif">Beans <%= berat %></text>
+  <% } %>
 </svg>

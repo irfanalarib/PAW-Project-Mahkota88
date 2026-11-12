@@ -1,33 +1,23 @@
 <%# Kartu produk. Pemakaian: include('partials/produk-card', { p: p }) %>
-<article class="flex h-full flex-col rounded-2xl border border-brown/10 bg-cream/50 p-5 text-center shadow-sm transition hover:shadow-md">
-  <div class="relative flex h-48 items-center justify-center">
+<article class="flex h-full flex-col rounded-3xl bg-ivory p-4 text-center shadow-sm ring-1 ring-brown/5 transition hover:shadow-md">
+  <div class="relative flex h-52 items-center justify-center rounded-2xl bg-beige/50">
     <% if (p.gambar) { %>
-      <img src="<%= p.gambar %>" alt="Kemasan kopi <%= p.nama %>" loading="lazy" class="h-48 w-auto object-contain">
+      <img src="<%= p.gambar %>" alt="Kemasan kopi <%= p.nama %>" loading="lazy" class="h-44 w-auto object-contain">
     <% } else { %>
-      <%- include('kemasan', { nama: p.nama, kelas: 'h-44 w-auto' }) %>
+      <%- include('kemasan', { nama: p.nama, asal: p.asal, berat: p.berat, kelas: 'h-44 w-auto' }) %>
     <% } %>
-    <span class="absolute right-0 top-0 rounded-full px-2.5 py-0.5 text-xs font-medium <%= p.tersedia ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800' %>">
+    <span class="absolute right-3 top-3 rounded-full px-2.5 py-0.5 text-[11px] font-medium <%= p.tersedia ? 'bg-sage/15 text-sage' : 'bg-red-100 text-red-800' %>">
       <%= p.tersedia ? 'Tersedia' : 'Habis' %>
     </span>
   </div>
 
-  <h3 class="mt-4 font-serif text-lg font-bold"><%= p.nama %></h3>
-  <p class="mt-1 text-xs text-coffee"><%= p.asal %><%= p.roast ? ' · Roast ' + p.roast : '' %></p>
-
-  <ul class="mt-3 flex flex-wrap justify-center gap-1.5" aria-label="Profil rasa">
-    <% p.notes.forEach(function (n) { %>
-      <li class="rounded-full bg-ivory px-2.5 py-0.5 text-[11px] text-coffee"><%= n %></li>
-    <% }); %>
-  </ul>
-
-  <div class="mt-auto pt-5">
-    <p class="text-xs text-brown/60">Beans <%= p.berat %></p>
-    <p class="mt-1 text-lg font-semibold"><%= formatRupiah(p.harga) %></p>
-
-    <button type="button" disabled
-      class="mt-4 w-full cursor-not-allowed rounded-md bg-brown px-4 py-2.5 text-xs font-medium uppercase tracking-widest text-cream opacity-50"
-      title="Fitur keranjang dan checkout tersedia pada tahap berikutnya">
-      <%= p.tersedia ? 'Pesan (segera hadir)' : 'Stok habis' %>
-    </button>
-  </div>
+  <h3 class="mt-4 font-serif text-lg font-bold text-brown"><%= p.nama %></h3>
+  <% if (p.asal) { %><p class="text-xs text-sage"><%= p.asal %></p><% } %>
+  <p class="mt-1 text-xs text-brown/60">
+    <%= p.roast ? 'Roast ' + p.roast : '' %><%= (p.roast && p.berat) ? ' · ' : '' %><%= p.berat ? 'Beans ' + p.berat : '' %>
+  </p>
+  <% if (p.notes && p.notes.length) { %>
+    <p class="mt-2 text-xs italic text-brown/60"><%= p.notes.join(' · ') %></p>
+  <% } %>
+  <p class="mt-auto pt-4 text-base font-semibold text-brown"><%= formatRupiah(p.harga) %></p>
 </article>

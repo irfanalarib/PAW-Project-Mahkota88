@@ -1,21 +1,22 @@
   </div><%# penutup #konten %>
 
-  <footer class="bg-brown text-cream/80">
+  <footer class="mt-8 bg-forest text-cream/80">
     <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-4 py-10">
       <a href="/" class="flex items-center gap-2" aria-label="<%= config.appName %> - beranda">
         <svg class="h-9 w-9" viewBox="0 0 48 48" aria-hidden="true">
-          <path d="M6 26 L10 10 L19 19 L24 7 L29 19 L38 10 L42 26 Z" fill="#C69A55"/>
-          <path d="M24 44 C14 44 8 37 8 30 C16 30 24 33 24 44 Z" fill="#F3EBD7"/>
-          <path d="M24 44 C34 44 40 37 40 30 C32 30 24 33 24 44 Z" fill="#C69A55"/>
+          <path d="M6 26 L10 10 L19 19 L24 7 L29 19 L38 10 L42 26 Z" fill="#E9D0C2"/>
+          <path d="M24 44 C14 44 8 37 8 30 C16 30 24 33 24 44 Z" fill="#F8F5EF"/>
+          <path d="M24 44 C34 44 40 37 40 30 C32 30 24 33 24 44 Z" fill="#9DB89F"/>
         </svg>
         <span class="font-serif text-lg font-bold text-cream"><%= config.appName %></span>
       </a>
 
-      <ul class="flex flex-wrap gap-6 text-xs uppercase tracking-widest">
-        <li><a href="/#katalog" class="hover:text-gold">Katalog</a></li>
-        <li><a href="/#cerita" class="hover:text-gold">Cerita</a></li>
-        <li><a href="/admin/produk" class="hover:text-gold">Kelola</a></li>
-        <li><a href="/api/produk" class="hover:text-gold">API</a></li>
+      <ul class="flex flex-wrap gap-7 text-sm">
+        <li><a href="/" class="hover:text-beige">Home</a></li>
+        <li><a href="/#katalog" class="hover:text-beige">Shop</a></li>
+        <li><a href="/#cerita" class="hover:text-beige">Our Story</a></li>
+        <li><a href="/admin/produk" class="hover:text-beige">Kelola</a></li>
+        <li><a href="/api/produk" class="hover:text-beige">API</a></li>
       </ul>
     </div>
     <div class="border-t border-white/10 py-4 text-center text-xs">
@@ -33,6 +34,59 @@
         var terbuka = menu.classList.toggle('hidden') === false;
         btn.setAttribute('aria-expanded', String(terbuka));
       });
+    })();
+
+    // Carousel "Our Beans", tombol "Lihat Semua Produk", dan pencarian (hanya di beranda)
+    (function () {
+      var track = document.getElementById('beans-track');
+      if (!track) return;
+
+      var kartu = track.querySelectorAll('[data-kartu]');
+      var prev = document.getElementById('beans-prev');
+      var next = document.getElementById('beans-next');
+      var semua = document.getElementById('beans-semua');
+      var cari = document.getElementById('cari-produk');
+      var kosong = document.getElementById('beans-kosong');
+      var ikonCari = document.getElementById('ikon-cari');
+
+      function geser(arah) {
+        track.scrollBy({ left: arah * track.clientWidth * 0.9, behavior: 'smooth' });
+      }
+      if (prev) prev.addEventListener('click', function () { geser(-1); });
+      if (next) next.addEventListener('click', function () { geser(1); });
+
+      if (semua) {
+        semua.addEventListener('click', function () {
+          var tampil = track.classList.toggle('semua');
+          semua.textContent = tampil ? 'Tampilkan Ringkas' : 'Lihat Semua Produk';
+          semua.setAttribute('aria-expanded', String(tampil));
+          [prev, next].forEach(function (b) { if (b) b.classList.toggle('hidden', tampil); });
+          track.scrollTo({ left: 0 });
+        });
+      }
+
+      if (cari) {
+        cari.addEventListener('input', function () {
+          var q = cari.value.trim().toLowerCase();
+          var cocok = 0;
+          kartu.forEach(function (k) {
+            var ok = !q || k.dataset.nama.indexOf(q) !== -1;
+            k.classList.toggle('hidden', !ok);
+            if (ok) cocok++;
+          });
+          if (kosong) kosong.classList.toggle('hidden', cocok !== 0);
+          // Saat mencari, tampilkan semua hasil agar tidak perlu menggeser carousel
+          if (q && semua && !track.classList.contains('semua')) semua.click();
+        });
+
+        if (ikonCari) {
+          ikonCari.addEventListener('click', function (e) {
+            e.preventDefault();
+            cari.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            cari.focus();
+          });
+        }
+      }
     })();
   </script>
 </body>

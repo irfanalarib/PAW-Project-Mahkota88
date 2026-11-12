@@ -2,108 +2,128 @@
 
 <main>
   <%# ===== 1. HERO ===== %>
-  <section class="bg-gradient-to-b from-cream/70 to-ivory" aria-labelledby="judul-hero">
-    <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 py-14 md:grid-cols-2 md:py-20">
-      <div>
-        <span class="inline-block border border-gold px-2 py-0.5 text-[11px] uppercase tracking-widest text-coffee">Kopi Nusantara</span>
-        <h1 id="judul-hero" class="mt-5 font-serif text-4xl font-bold leading-tight sm:text-5xl">Cita Rasa Lokal,<br>Kualitas Istimewa.</h1>
-        <p class="mt-4 max-w-md text-sm leading-relaxed text-brown/80 sm:text-base"><%= config.tagline %></p>
-        <a href="#katalog" class="mt-8 inline-flex items-center gap-2 bg-brown px-6 py-3 text-xs font-medium uppercase tracking-widest text-cream hover:bg-coffee">
-          Belanja Sekarang <span aria-hidden="true">&rarr;</span>
-        </a>
+  <section class="relative overflow-hidden bg-cream" aria-labelledby="judul-hero">
+    <%- include('partials/daun', { kelas: 'pointer-events-none absolute -left-8 top-2 h-64 w-64 -rotate-12 text-sage/30' }) %>
+    <%- include('partials/daun', { kelas: 'pointer-events-none absolute bottom-40 left-1/3 hidden h-40 w-40 rotate-45 text-sage/25 md:block' }) %>
+
+    <div class="relative mx-auto max-w-6xl px-4 pt-10 md:pt-16">
+      <div class="relative grid items-center gap-8 md:grid-cols-12">
+        <div class="relative z-10 md:col-span-7">
+          <p class="text-[11px] font-medium uppercase tracking-[0.25em] text-sage">Kopi pilihan nusantara</p>
+          <h1 id="judul-hero" class="mt-4 font-serif text-5xl font-bold leading-[1.05] text-brown sm:text-6xl lg:text-7xl">
+            Cita Rasa Lokal,<br>Kualitas Istimewa.
+          </h1>
+          <p class="mt-5 max-w-md text-sm leading-relaxed text-brown/80 sm:text-base"><%= config.tagline %></p>
+          <a href="#katalog" class="mt-8 inline-flex items-center gap-2 rounded-full bg-sage px-7 py-3 text-sm font-medium text-ivory transition hover:bg-forest">
+            Shop Now <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
+        <div class="relative md:col-span-5 md:-ml-24 lg:-ml-32">
+          <div class="hero-foto h-72 sm:h-96 md:h-[28rem]">
+            <img src="/images/hero-coffee.jpg" alt="Tangan menggenggam biji kopi sangrai" class="h-full w-full rounded-[2rem] object-cover">
+          </div>
+          <%- include('partials/biji', { kelas: 'absolute -top-2 left-6 h-6 w-9 rotate-[25deg] drop-shadow' }) %>
+          <%- include('partials/biji', { kelas: 'absolute right-4 top-1/3 h-5 w-8 -rotate-[20deg] drop-shadow' }) %>
+          <%- include('partials/biji', { kelas: 'absolute bottom-8 left-2 h-7 w-11 rotate-[50deg] drop-shadow' }) %>
+        </div>
       </div>
 
-      <div class="relative h-72 overflow-hidden rounded-3xl bg-gradient-to-br from-cream to-gold/60 sm:h-96">
-        <%- include('partials/biji-hero') %>
+      <%# Pita Harga Tetap dengan kemasan hijau tua %>
+      <div class="relative z-10 mt-20 pb-10 md:mt-6">
+        <div class="flex flex-wrap items-center gap-6 rounded-3xl bg-forest px-6 py-6 text-cream md:px-10">
+          <div class="-mt-16 flex shrink-0 -space-x-5 pl-2 sm:-mt-20" aria-hidden="true">
+            <% produk.slice(0, 3).forEach(function (p, i) { %>
+              <%- include('partials/kemasan', { nama: p.nama, asal: p.asal, berat: p.berat, kelas: (i === 1 ? 'h-40 sm:h-48' : 'h-36 sm:h-44') + ' w-auto' }) %>
+            <% }); %>
+          </div>
+          <div class="max-w-md">
+            <p class="font-serif text-3xl font-bold">Harga Tetap</p>
+            <p class="mt-1 text-sm text-cream/80">Harga yang tertera adalah harga resmi toko, tanpa biaya tersembunyi. Pesan tanpa daftar akun dan selesaikan lewat WhatsApp.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <%# ===== 2. PITA HARGA TETAP ===== %>
-  <section class="bg-brown text-cream" aria-label="Informasi harga">
-    <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-8 px-4 py-8 sm:justify-between">
-      <div class="flex items-end -space-x-4" aria-hidden="true">
-        <%- include('partials/kemasan', { nama: 'Mahkota', kelas: 'h-28 w-auto' }) %>
-        <%- include('partials/kemasan', { nama: 'Nusantara', kelas: 'h-32 w-auto' }) %>
-        <%- include('partials/kemasan', { nama: 'Pilihan', kelas: 'h-28 w-auto' }) %>
-      </div>
-      <div class="max-w-md text-center sm:text-left">
-        <p class="font-serif text-3xl font-bold text-gold">Harga Tetap</p>
-        <p class="mt-1 text-sm text-cream/80">Harga yang tertera adalah harga resmi toko, tanpa biaya tersembunyi. Pesan tanpa daftar akun dan selesaikan lewat WhatsApp.</p>
-      </div>
+  <%# ===== 2. OUR BEANS ===== %>
+  <section id="katalog" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-14" aria-labelledby="judul-katalog">
+    <div class="flex items-center gap-5">
+      <span class="h-px flex-1 bg-brown/20"></span>
+      <h2 id="judul-katalog" class="font-serif text-3xl font-bold">Our Beans</h2>
+      <span class="h-px flex-1 bg-brown/20"></span>
     </div>
-  </section>
 
-  <%# ===== 3. KATALOG ===== %>
-  <section id="katalog" class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16" aria-labelledby="judul-katalog">
-    <div class="flex items-center gap-4">
-      <span class="h-px flex-1 bg-brown/20"></span>
-      <h2 id="judul-katalog" class="font-serif text-2xl font-bold sm:text-3xl">Katalog Kopi</h2>
-      <span class="h-px flex-1 bg-brown/20"></span>
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+      <p class="text-sm text-brown/70"><%= totalTersedia %> dari <%= totalProduk %> varian tersedia</p>
+      <label class="relative block w-full sm:w-64">
+        <span class="sr-only">Cari kopi</span>
+        <input id="cari-produk" type="search" placeholder="Cari kopi..." autocomplete="off"
+          class="w-full rounded-full border border-brown/15 bg-ivory px-4 py-2 text-sm outline-none focus:border-sage">
+      </label>
     </div>
-    <p class="mt-3 text-center text-sm text-brown/70"><%= totalTersedia %> dari <%= totalProduk %> varian tersedia</p>
 
     <% if (produk.length === 0) { %>
       <p class="mt-10 text-center text-brown/60">Belum ada produk. Tambahkan lewat halaman Kelola.</p>
     <% } else { %>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        <% produk.forEach(function (p) { %>
-          <%- include('partials/produk-card', { p: p }) %>
-        <% }); %>
+      <div class="relative mt-8">
+        <% if (produk.length > 4) { %>
+          <button id="beans-prev" type="button" aria-label="Produk sebelumnya"
+            class="absolute -left-3 top-1/3 z-10 hidden h-10 w-10 items-center justify-center rounded-full bg-ivory text-xl shadow ring-1 ring-brown/10 hover:bg-cream lg:flex">&#8249;</button>
+          <button id="beans-next" type="button" aria-label="Produk berikutnya"
+            class="absolute -right-3 top-1/3 z-10 hidden h-10 w-10 items-center justify-center rounded-full bg-ivory text-xl shadow ring-1 ring-brown/10 hover:bg-cream lg:flex">&#8250;</button>
+        <% } %>
+
+        <div id="beans-track">
+          <% produk.forEach(function (p) { %>
+            <div data-kartu data-nama="<%= (p.nama + ' ' + (p.asal || '')).toLowerCase() %>">
+              <%- include('partials/produk-card', { p: p }) %>
+            </div>
+          <% }); %>
+        </div>
       </div>
+
+      <p id="beans-kosong" class="mt-8 hidden text-center text-brown/60">Tidak ada kopi yang cocok dengan pencarian Anda.</p>
+
+      <% if (produk.length > 4) { %>
+        <div class="mt-8 text-center">
+          <button id="beans-semua" type="button" aria-expanded="false"
+            class="rounded-full border border-brown/20 bg-ivory px-6 py-2 text-xs font-medium hover:border-sage hover:text-sage">Lihat Semua Produk</button>
+        </div>
+      <% } %>
     <% } %>
   </section>
 
-  <%# ===== 4. CERITA ASAL KOPI ===== %>
-  <section id="cerita" class="scroll-mt-20 bg-cream/60" aria-labelledby="judul-cerita">
-    <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 py-14 md:grid-cols-2">
-      <div class="relative h-64 overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900 to-brown md:h-80">
-        <%- include('partials/ilustrasi-kebun') %>
+  <%# ===== 3. DISCOVER OUR ORIGIN ===== %>
+  <section id="cerita" class="mx-auto max-w-6xl scroll-mt-20 px-4 pb-6" aria-labelledby="judul-cerita">
+    <div class="grid overflow-hidden rounded-3xl bg-ivory shadow-sm ring-1 ring-brown/5 md:grid-cols-2">
+      <div class="relative h-64 md:h-auto md:min-h-[22rem]">
+        <img src="/images/perkebunan-kopi.jpg" alt="Buah kopi merah matang di pohon" loading="lazy" class="absolute inset-0 h-full w-full object-cover">
       </div>
-      <div>
-        <span class="inline-block border border-gold px-2 py-0.5 text-[11px] uppercase tracking-widest text-coffee">Cerita Kami</span>
-        <h2 id="judul-cerita" class="mt-4 font-serif text-3xl font-bold">Kopi dari Tanah Pilihan</h2>
-        <p class="mt-3 max-w-md text-sm leading-relaxed text-brown/80">
-          Dapatkan pengalaman rasa kopi khas daerah dari perkebunan terbaik di Indonesia.
-          Setiap varian di katalog dilengkapi daerah asal, tingkat sangrai, dan profil rasa.
-        </p>
-        <a href="#katalog" class="mt-5 inline-block border-b border-brown text-sm font-medium hover:text-gold hover:border-gold">Selengkapnya &rarr;</a>
-      </div>
-    </div>
-  </section>
 
-  <%# ===== 5. KUALITAS ===== %>
-  <section id="kualitas" class="scroll-mt-20 bg-brown text-cream"
-    style="background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0 6px, transparent 6px 12px);"
-    aria-labelledby="judul-kualitas">
-    <div class="mx-auto max-w-6xl px-4 py-16 text-center md:text-left">
-      <h2 id="judul-kualitas" class="font-serif text-3xl font-bold">Kualitas Terbaik<br>di Setiap Kemasan</h2>
-      <p class="mt-3 max-w-md text-sm leading-relaxed text-cream/80 md:max-w-lg">
-        Melalui proses seleksi yang ketat, kami menghadirkan kopi berkualitas untuk Anda.
-      </p>
-      <a href="#katalog" class="mt-6 inline-flex items-center gap-2 border border-gold px-5 py-2.5 text-xs font-medium uppercase tracking-widest text-gold hover:bg-gold hover:text-brown">Lihat Katalog</a>
-    </div>
-  </section>
+      <div class="grid gap-8 p-8 sm:grid-cols-5 md:p-10">
+        <div class="sm:col-span-3">
+          <p class="text-[11px] font-medium uppercase tracking-[0.25em] text-sage">Discover Our Origin</p>
+          <h2 id="judul-cerita" class="mt-3 font-serif text-3xl font-bold leading-tight">Kopi dari Tanah Pilihan</h2>
+          <p class="mt-3 text-sm leading-relaxed text-brown/80">
+            Dapatkan pengalaman rasa kopi khas daerah dari perkebunan terbaik di Indonesia.
+          </p>
+          <a href="#katalog" class="mt-5 inline-block border-b border-brown text-sm font-medium hover:border-sage hover:text-sage">Selengkapnya &rarr;</a>
+        </div>
 
-  <%# ===== 6. MENGAPA MEMILIH KAMI ===== %>
-  <section class="mx-auto max-w-6xl px-4 py-16" aria-labelledby="judul-mengapa">
-    <h2 id="judul-mengapa" class="text-center font-serif text-2xl font-bold sm:text-3xl">Mengapa <%= config.appName %>?</h2>
-
-    <div class="mt-10 grid gap-8 text-center sm:grid-cols-3">
-      <div>
-        <svg class="mx-auto h-10 w-10 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-14 14-14 0 9-6 14-14 14z"/><path d="M5 19L13 11"/></svg>
-        <h3 class="mt-3 text-sm font-semibold">Kopi Pilihan</h3>
-        <p class="mt-1 text-sm text-brown/70">dari Tanah Indonesia</p>
-      </div>
-      <div>
-        <svg class="mx-auto h-10 w-10 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8l8-4 8 4v8l-8 4-8-4V8z"/><path d="M4 8l8 4 8-4M12 12v8"/></svg>
-        <h3 class="mt-3 text-sm font-semibold">Kemasan Berkualitas</h3>
-        <p class="mt-1 text-sm text-brown/70">&amp; Praktis</p>
-      </div>
-      <div>
-        <svg class="mx-auto h-10 w-10 text-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h11v4a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V9z"/><path d="M16 10h2a2 2 0 0 1 0 4h-2"/><path d="M8 4v2M12 4v2"/></svg>
-        <h3 class="mt-3 text-sm font-semibold">Rasa Autentik</h3>
-        <p class="mt-1 text-sm text-brown/70">yang Khas</p>
+        <% if (asalKopi.length > 0) { %>
+          <ul class="space-y-4 sm:col-span-2" aria-label="Daerah asal kopi">
+            <% asalKopi.forEach(function (a) { %>
+              <li class="flex items-start gap-3">
+                <svg class="mt-0.5 h-6 w-6 shrink-0 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 16c0-5 3-8 8-8 0 5-3 8-8 8z"/></svg>
+                <div>
+                  <p class="text-sm font-medium leading-tight"><%= a.daerah %></p>
+                  <p class="text-xs text-brown/60"><%= a.nama %></p>
+                </div>
+              </li>
+            <% }); %>
+          </ul>
+        <% } %>
       </div>
     </div>
   </section>

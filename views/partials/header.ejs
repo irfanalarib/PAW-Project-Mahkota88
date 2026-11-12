@@ -15,11 +15,12 @@
       theme: {
         extend: {
           colors: {
-            brown: '#3B2116',
-            coffee: '#70452C',
-            gold: '#C69A55',
-            cream: '#F3EBD7',
-            ivory: '#FFFCF7',
+            cream: '#F8F5EF',
+            sage: '#4F6F52',
+            forest: '#2F4A36',
+            beige: '#E9D0C2',
+            brown: '#493020',
+            ivory: '#FFFFFF',
           },
           fontFamily: {
             sans: ['Poppins', 'system-ui', 'sans-serif'],
@@ -29,39 +30,66 @@
       },
     };
   </script>
+  <style>
+    /* Foto hero memudar ke kiri agar menyatu dengan latar krem (layar lebar) */
+    @media (min-width: 768px) {
+      .hero-foto {
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 32%);
+        mask-image: linear-gradient(to right, transparent 0%, #000 32%);
+      }
+    }
+    /* Carousel produk (Our Beans): 4 kartu per baris di layar lebar */
+    #beans-track {
+      display: flex; gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; scrollbar-width: none; padding-bottom: .5rem;
+    }
+    #beans-track::-webkit-scrollbar { display: none; }
+    #beans-track > [data-kartu] { flex: 0 0 calc((100% - 3.75rem) / 4); scroll-snap-align: start; }
+    @media (max-width: 1023px) { #beans-track > [data-kartu] { flex-basis: calc((100% - 1.25rem) / 2); } }
+    @media (max-width: 639px)  { #beans-track > [data-kartu] { flex-basis: 78%; } }
+    #beans-track.semua { flex-wrap: wrap; overflow: visible; scroll-snap-type: none; }
+    @media (max-width: 639px)  { #beans-track.semua > [data-kartu] { flex-basis: 100%; } }
+  </style>
 </head>
-<body class="bg-ivory font-sans text-brown antialiased">
+<body class="bg-cream font-sans text-brown antialiased">
   <a href="#konten" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2">Lewati ke konten</a>
 
-  <header class="sticky top-0 z-40 border-b border-brown/10 bg-ivory/95 backdrop-blur">
-    <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3" aria-label="Navigasi utama">
+  <header class="sticky top-0 z-40 border-b border-brown/5 bg-cream/85 backdrop-blur">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3" aria-label="Navigasi utama">
       <a href="/" class="flex items-center gap-2" aria-label="<%= config.appName %> - beranda">
         <svg class="h-9 w-9" viewBox="0 0 48 48" aria-hidden="true">
-          <path d="M6 26 L10 10 L19 19 L24 7 L29 19 L38 10 L42 26 Z" fill="#C69A55"/>
-          <path d="M24 44 C14 44 8 37 8 30 C16 30 24 33 24 44 Z" fill="#3B2116"/>
-          <path d="M24 44 C34 44 40 37 40 30 C32 30 24 33 24 44 Z" fill="#70452C"/>
+          <path d="M6 26 L10 10 L19 19 L24 7 L29 19 L38 10 L42 26 Z" fill="#493020"/>
+          <path d="M24 44 C14 44 8 37 8 30 C16 30 24 33 24 44 Z" fill="#2F4A36"/>
+          <path d="M24 44 C34 44 40 37 40 30 C32 30 24 33 24 44 Z" fill="#4F6F52"/>
         </svg>
-        <span class="font-serif text-lg font-bold"><%= config.appName %></span>
+        <span class="font-serif text-lg font-bold leading-tight text-brown"><%= config.appName %></span>
       </a>
 
-      <ul class="hidden items-center gap-8 text-xs font-medium uppercase tracking-widest md:flex">
-        <li><a href="/" class="hover:text-gold">Beranda</a></li>
-        <li><a href="/#katalog" class="hover:text-gold">Katalog</a></li>
-        <li><a href="/#cerita" class="hover:text-gold">Cerita</a></li>
-        <li><a href="/#kualitas" class="hover:text-gold">Kualitas</a></li>
-        <li><a href="/admin/produk" class="hover:text-gold">Kelola</a></li>
+      <ul class="hidden items-center gap-9 text-sm md:flex">
+        <li><a href="/" class="hover:text-sage">Home</a></li>
+        <li><a href="/#katalog" class="hover:text-sage">Shop</a></li>
+        <li><a href="/#cerita" class="hover:text-sage">Our Story</a></li>
+        <li><a href="/admin/produk" class="hover:text-sage">Kelola</a></li>
       </ul>
 
-      <button id="menu-btn" type="button" class="md:hidden" aria-label="Buka menu" aria-expanded="false" aria-controls="menu-mobile">
-        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
+      <div class="flex items-center gap-3">
+        <a id="ikon-cari" href="/#katalog" aria-label="Cari kopi" class="rounded-full p-2 hover:bg-sage/10">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4-4"/></svg>
+        </a>
+        <button type="button" disabled aria-label="Keranjang (segera hadir)" title="Keranjang menyusul pada tahap berikutnya"
+          class="cursor-not-allowed rounded-full p-2 opacity-60">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h2l2 10h9l2-7H7"/><circle cx="10" cy="19" r="1"/><circle cx="17" cy="19" r="1"/></svg>
+        </button>
+        <button id="menu-btn" type="button" class="rounded-full p-2 md:hidden" aria-label="Buka menu" aria-expanded="false" aria-controls="menu-mobile">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
     </nav>
 
-    <ul id="menu-mobile" class="hidden border-t border-brown/10 px-4 pb-3 text-sm font-medium uppercase tracking-widest md:hidden">
-      <li><a href="/" class="block py-3">Beranda</a></li>
-      <li><a href="/#katalog" class="block py-3">Katalog</a></li>
-      <li><a href="/#cerita" class="block py-3">Cerita</a></li>
-      <li><a href="/#kualitas" class="block py-3">Kualitas</a></li>
+    <ul id="menu-mobile" class="hidden border-t border-brown/5 px-4 pb-3 text-sm md:hidden">
+      <li><a href="/" class="block py-3">Home</a></li>
+      <li><a href="/#katalog" class="block py-3">Shop</a></li>
+      <li><a href="/#cerita" class="block py-3">Our Story</a></li>
       <li><a href="/admin/produk" class="block py-3">Kelola</a></li>
     </ul>
   </header>
