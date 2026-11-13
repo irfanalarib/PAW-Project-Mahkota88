@@ -19,4 +19,9 @@ function kirimError(res, err) {
   return res.status(500).json({ status: 'error', pesan: 'Terjadi kesalahan pada server' });
 }
 
-module.exports = { idValid, kirimError };
+// Format response seragam untuk endpoint chat: { code, success, message, data }
+function sendResponse(res, { code = 200, success = true, message = '', data = null }) {
+  return res.status(code).json({ code, success, message, data });
+}
+
+module.exports = { idValid, kirimError, sendResponse };
