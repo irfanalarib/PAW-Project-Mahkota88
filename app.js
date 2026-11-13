@@ -10,6 +10,7 @@ require('./models/produkModel'); // mendaftarkan model sebelum sync
 const requestLogger = require('./middlewares/logger');
 const pageRoutes = require('./routes/pageRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const chatRoutes = require('./routes/chat.routes');
 const { formatRupiah } = require('./utils/format');
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', pageRoutes);
 app.use('/api', apiRoutes);
+app.use('/api/chat', chatRoutes);
 
 // 404: JSON untuk path /api, halaman EJS untuk lainnya
 app.use((req, res) => {
