@@ -1,0 +1,35 @@
+<%# Widget chat Asisten AI: tombol mengambang + panel percakapan. Logikanya ada di /js/chat.js %>
+<button id="chat-toggle" type="button" aria-label="Buka asisten AI" aria-expanded="false" aria-controls="chat-panel"
+  class="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-sage text-ivory shadow-lg transition hover:bg-forest sm:bottom-6 sm:right-6">
+  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+</button>
+
+<section id="chat-panel" class="fixed bottom-20 left-4 right-4 z-50 hidden flex-col overflow-hidden rounded-3xl bg-ivory shadow-2xl ring-1 ring-brown/10 sm:left-auto sm:right-6 sm:bottom-24 sm:w-96"
+  style="height: min(32rem, calc(100vh - 7rem));" aria-label="Asisten AI Kopi Mahkota 88">
+  <header class="flex items-center justify-between bg-forest px-4 py-3 text-cream">
+    <div>
+      <p class="font-serif text-base font-bold leading-tight">Asisten Mahkota</p>
+      <p class="text-[11px] text-cream/70">Tanya seputar produk kopi kami</p>
+    </div>
+    <button id="chat-close" type="button" aria-label="Tutup chat" class="rounded-full p-1.5 hover:bg-white/10">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </header>
+
+  <div id="chat-log" class="flex-1 space-y-3 overflow-y-auto bg-cream px-4 py-4 text-sm" role="log" aria-live="polite"></div>
+
+  <div id="chat-saran" class="flex flex-wrap gap-2 border-t border-brown/5 bg-cream px-4 pb-2 pt-2">
+    <button type="button" data-saran="Apa saja produk yang tersedia di aplikasi ini?" class="rounded-full border border-sage/40 px-3 py-1 text-xs text-sage hover:bg-sage/10">Produk tersedia</button>
+    <button type="button" data-saran="Kopi apa yang paling murah?" class="rounded-full border border-sage/40 px-3 py-1 text-xs text-sage hover:bg-sage/10">Paling murah</button>
+  </div>
+
+  <form id="chat-form" class="flex items-center gap-2 border-t border-brown/5 bg-ivory p-3" autocomplete="off">
+    <label for="chat-input" class="sr-only">Tulis pertanyaan</label>
+    <input id="chat-input" type="text" maxlength="500" placeholder="Tulis pertanyaan Anda..."
+      class="min-w-0 flex-1 rounded-full border border-brown/15 bg-cream px-4 py-2 text-sm outline-none focus:border-sage">
+    <button id="chat-kirim" type="submit"
+      class="rounded-full bg-sage px-4 py-2 text-sm font-medium text-ivory transition hover:bg-forest disabled:cursor-not-allowed disabled:opacity-50">Kirim</button>
+  </form>
+</section>
+
+<script src="/js/chat.js" defer></script>
